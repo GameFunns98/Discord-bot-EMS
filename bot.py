@@ -114,7 +114,7 @@ def parse_datum(raw: str) -> str:
     vydal="Vydal",
     hodnost="Hodnost",
 )
-@app_commands.autocomplete(predmet=ac_predmet, vydal_hodnost=ac_hodnost, duvod=ac_duvod)
+@app_commands.autocomplete(predmet=ac_predmet, vydal=ac_hodnost, duvod=ac_duvod)
 async def vydejka(
     interaction: discord.Interaction,
     prijemce: str,
@@ -170,18 +170,7 @@ async def on_resumed():
     print("🔄 Bot znovu připojen")
 
 # ─────────────────────────────────────────────
-#  AUTO-RECONNECT LOOP
-# ─────────────────────────────────────────────
-async def main():
-    while True:
-        try:
-            await bot.start(BOT_TOKEN)
-        except Exception as e:
-            print(f"❌ Crash: {e}")
-            await asyncio.sleep(10)
-
-# ─────────────────────────────────────────────
 #  START
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
-    asyncio.run(main())
+    bot.run(BOT_TOKEN)
