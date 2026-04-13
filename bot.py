@@ -104,27 +104,27 @@ def parse_datum(raw: str) -> str:
 # ─────────────────────────────────────────────
 @tree.command(name="vydejka", description="Vytvoří výdejku materiálu.")
 @app_commands.describe(
-    prijemce_tag="Discord @mention",
-    prijemce_jmeno="Celé jméno",
+    prijemce="Discord @mention",
+    jmeno="Celé jméno",
     datum="DD.MM.YYYY",
     predmet="Předmět",
     mnozstvi="Množství",
     duvod="Důvod",
     seriove_cislo="Sériové číslo",
-    vydal_jmeno="Vydal",
-    vydal_hodnost="Hodnost",
+    vydal="Vydal",
+    hodnost="Hodnost",
 )
 @app_commands.autocomplete(predmet=ac_predmet, vydal_hodnost=ac_hodnost, duvod=ac_duvod)
 async def vydejka(
     interaction: discord.Interaction,
-    prijemce_tag: str,
-    prijemce_jmeno: str,
+    prijemce: str,
+    jmeno: str,
     datum: str,
     predmet: str,
     mnozstvi: str,
     duvod: str,
-    vydal_jmeno: str,
-    vydal_hodnost: str,
+    vydal: str,
+    hodnost: str,
     seriove_cislo: str = "—",
 ):
     datum_fmt = parse_datum(datum)
@@ -138,8 +138,8 @@ async def vydejka(
 
     embed.set_footer(text=f"Vygenerováno: {now}")
 
-    embed.add_field(name="👤 Příjemce", value=prijemce_tag, inline=True)
-    embed.add_field(name="📛 Jméno", value=prijemce_jmeno, inline=True)
+    embed.add_field(name="👤 Příjemce", value=prijemce, inline=True)
+    embed.add_field(name="📛 Jméno", value=jmeno, inline=True)
     embed.add_field(name="📅 Datum", value=datum_fmt, inline=True)
 
     embed.add_field(name="📦 Předmět", value=predmet, inline=True)
@@ -148,8 +148,8 @@ async def vydejka(
 
     embed.add_field(name="📝 Důvod", value=duvod, inline=False)
 
-    embed.add_field(name="✍️ Vydal", value=vydal_jmeno, inline=True)
-    embed.add_field(name="🏅 Hodnost", value=vydal_hodnost, inline=True)
+    embed.add_field(name="✍️ Vydal", value=vydal, inline=True)
+    embed.add_field(name="🏅 Hodnost", value=hodnost, inline=True)
 
     await interaction.response.send_message(embed=embed)
 
